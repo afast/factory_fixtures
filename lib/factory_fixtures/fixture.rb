@@ -1,12 +1,18 @@
 require 'active_record/fixtures'
 
 module FactoryFixtures
+
+  # Represents a fixture. The fixtures are just the objects that are instantiated
   class Fixture
+
+    # Hash with attributes and its values
     attr_reader :fixture_data
+
     def initialize
       @fixture_data = {}
     end
 
+    # Returns an identification for a fixture_label, used when specifying association values.
     def F fixture_label
       ::Fixtures.identify fixture_label
     end

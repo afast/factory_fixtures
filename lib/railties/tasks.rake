@@ -1,6 +1,6 @@
 namespace :factory_fixtures do
 
-  desc 'TODO: describme me please!'
+  desc 'Load fixtures defined and created with factories'
   task :load => [:environment] do
     FactoryFixtures::Loader.load_files Rails.root
   end

@@ -6,7 +6,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('factory_girl_rails', '~> 1.0.1')
   s.add_runtime_dependency('rails', '~> 3.0.3')
   s.authors = ["snmgian"]
-  s.description = %q{RailsAdmin is a Rails engine that provides an easy-to-use interface for managing your data}
   s.email = ['snmgian@gmail.com', 'gian.zas@moove-it.com']
   s.files = Dir['Gemfile', 'LICENSE.mkd', 'README.mkd', 'Rakefile', 'app/**/*', 'config/**/*', 'lib/**/*', 'public/**/*']
   s.name = 'factory_fixtures'

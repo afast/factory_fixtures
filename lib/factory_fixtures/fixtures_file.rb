@@ -6,12 +6,14 @@ require 'factory_girl'
 module FactoryFixtures
   module FixturesFile
 
+    # Defines a factory
     def define factory_name
       Factory.define factory_name, :class => @factory_class do |u|
         yield u
       end
     end
 
+    # Creates an object based on #{factory_name}
     def create fixture_name, factory_name = nil, &block
       fixture_name = fixture_name.to_sym
 
@@ -35,6 +37,9 @@ module FactoryFixtures
     end
 
     private
+    # Sets the values for the association fields
+    #
+    # For each association field present in <em>fixture_data</em> creates a new entry for it's FK and deletes the field entry
     def set_association_data fixture, model_class
       assocs = model_class.reflect_on_all_associations
 
