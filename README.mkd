@@ -1,0 +1,66 @@
+FactoryFixtures
+==========
+FactoryFixtures is a Rails engine that provides an easier integration with Factory Girl. 
+
+Because Factory Girl it's not a direct reaplacement for yaml fixtures, this gem allows us to use factory_girl features when writing fixtures.
+
+
+It currently offers one feature:
+
+* Load fixtures written with factory girl syntax
+
+And it's planned to support this features:
+
+* has_and_belongs_to_many associations
+* Polymorphic associations
+* Fixtures load when executing tests
+
+Supported ORMs:
+
+* ActiveRecord
+
+        
+Usage
+-----
+Invoke the task factory_fixtures:load
+    $ rake factory_fixtures:load
+
+This task will load the defined fixtures into the database
+
+### Files
+
+Given an Account model create a file named test/factory_fixtures/accounts.rb
+
+### Defining factories
+
+  define :verified_account do |a|
+    a.is_verified true
+    a.address { |a| "#{rand 100} - #{a.company}" }
+    a.zip { "#{rand 10}" * 5 }
+  end
+
+### Creating fixtures based on previously defined factories
+
+  create :test_poc, :verified_account do
+    company 'test_poc'
+  end
+
+If the factory is not specified it will use a default factory with empty default values.
+
+### Fidding associations
+
+  create :super_account, :verified_account do
+    company 'super'
+    distributor F(:distributor_mega)
+  end
+
+Invoke F method to fed up associations. <em>:distributor_mega</em> it's the name of a fixture, so <em>distributor F(:distributor_mega)</em> will set the column distributor_id to the identifier of the object :distributor_mega.
+
+License
+-------
+Copyright (c) 2010 "snmgian" / "mooveit", released under LGPL v3 license. 
+
+Contact
+-------
+Contact at: snmgian at gmail dot com, gian.zas at moove-it dot com
+
