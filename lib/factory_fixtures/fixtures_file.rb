@@ -4,12 +4,18 @@ require 'active_support'
 require 'factory_girl'
 
 module FactoryFixtures
-  module FixturesFile
+  class FixturesFile
+
+    attr_reader :factory_class
+
+    def initialize factory_class
+      @factory_class = factory_class
+    end
 
     # Defines a factory
     def define factory_name
       Factory.define factory_name, :class => @factory_class do |u|
-        yield u
+        yield u if block_given?
       end
     end
 

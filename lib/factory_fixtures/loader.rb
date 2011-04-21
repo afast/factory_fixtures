@@ -17,13 +17,10 @@ module FactoryFixtures
     private
     # Loads the fixtures presents in file
     def self.load_from_file(file)
-      fixture_wrapper = Class.new do
-        extend FactoryFixtures::FixturesFile
 
-        @fixtures = []
-      end
-      fixture_wrapper.instance_variable_set :@factory_class, factory_class_sym_from_filename(file)
-      fixture_wrapper.class_eval File.read(file)
+      fixtures_file = FactoryFixtures::FixturesFile.new factory_class_sym_from_filename(file)
+
+      fixtures_file.instance_eval File.read(file)
     end
 
     # Searches for fixtures files present in #{dir}/test/factory_fixtures

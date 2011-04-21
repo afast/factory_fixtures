@@ -1,0 +1,22 @@
+sqlite:
+  :adapter: sqlite
+  :database: ":memory:"
+
+sqlite3:
+  :adapter: sqlite3
+  :database: ":memory:"
+
+mysql:
+  :adapter: mysql
+  :host: localhost
+  :username: test
+  :password: 
+  :database: factory_fixtures_test
+
+mysql:
+  :adapter: mysql
+  :host: localhost
+  :username: test
+  :password: 
+  :database: factory_fixtures_test
+
