@@ -41,14 +41,12 @@ def setup
     end
   end
 
-  puts db_adapter.inspect
   if db_adapter.nil? 
     raise "No DB Adapter selected or found. Pass the DB= option to pick one, or install Sqlite or Sqlite3." 
   end
 
   ActiveRecord::Base.establish_connection(config[db_adapter])  
 
-  #require File.dirname(__FILE__) + '/../rails/init.rb' 
 end
 
 setup

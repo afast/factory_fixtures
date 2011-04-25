@@ -8,12 +8,12 @@ Because Factory Girl it's not a direct reaplacement for yaml fixtures, this gem 
 It currently offers one feature:
 
 * Load fixtures written with factory girl syntax
+* has_and_belongs_to_many associations
+* Fixtures load when executing tests
 
 And it's planned to support this features:
 
-* has_and_belongs_to_many associations
 * Polymorphic associations
-* Fixtures load when executing tests
 
 Supported ORMs:
 
@@ -55,6 +55,20 @@ If the factory is not specified it will use a default factory with empty default
   end
 
 Invoke F method to fed up associations. <em>:distributor_mega</em> it's the name of a fixture, so <em>distributor F(:distributor_mega)</em> will set the column distributor_id to the identifier of the object :distributor_mega.
+
+### Loading fixtures on rails unit tests
+
+The unit tests classes must inherit <em>FactoryFixtures::Unit::TestCase</em>
+
+  class UserTest < FactoryFixtures::Unit::TestCase
+  end
+
+In the test methods <em>users</em> returns a hash with the fixtures' names as keys and the fixtures as values
+
+
+  factory_fixtures :accounts, :users, :devices
+
+<em>factory_fixtures</em> loads the specified fixtures files and creates method whose names are the fixtures' names.
 
 License
 -------
