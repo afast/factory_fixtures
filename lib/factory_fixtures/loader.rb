@@ -14,13 +14,19 @@ module FactoryFixtures
       end
     end
 
-    private
     # Loads the fixtures presents in file
+    # TODO test it!
     def self.load_from_file(file)
 
       fixtures_file = FactoryFixtures::FixturesFile.new factory_class_sym_from_filename(file)
 
-      fixtures_file.instance_eval File.read(file)
+      if File.exists? file
+        fixtures_file.instance_eval File.read(file)
+        fixtures_file.fixtures
+      else
+        puts "--- FIle not exists: #{file}"
+        false
+      end
     end
 
     # Searches for fixtures files present in #{dir}/test/factory_fixtures

@@ -18,9 +18,14 @@ module FactoryFixtures
     end
 
     def method_missing field_name, *args, &block
-      if !args.empty?
+      return if args.empty?
+
+      if args.length == 1
         @fixture_data[field_name.to_sym] = args.first
+      else
+        @fixture_data[field_name.to_sym] = args
       end
+
     end
   end
 end

@@ -10,6 +10,8 @@ require_relative 'support/test_helper'
 class TestFixturesFile < FactoryFixtures::UnitTestCase
 
   def setup
+      @accounts = FactoryFixtures::FixturesFile.new :account
+      @cities = FactoryFixtures::FixturesFile.new :city
       @users = FactoryFixtures::FixturesFile.new :user
 
       @users.define :simple_user      
@@ -20,7 +22,6 @@ class TestFixturesFile < FactoryFixtures::UnitTestCase
         u.password_salt '$2a$10$xMfCF.PExnD59a5F3hBV1e'
       end
 
-      @accounts = FactoryFixtures::FixturesFile.new :account
       @accounts.define :simple_account do |a|
         a.is_verified true
         a.zip { "#{rand 10}" * 5 }
@@ -55,7 +56,7 @@ class TestFixturesFile < FactoryFixtures::UnitTestCase
   end
 
   trans :test_create do
-    @users.create :james, :regular_user do
+    @users.create :james, :simple_user do
 
       first_name 'james'
       last_name 'jameson'
@@ -72,6 +73,21 @@ class TestFixturesFile < FactoryFixtures::UnitTestCase
     assert_equal james.last_name, 'jameson'
   end
 
+  trans :test_create_without_factory do
+    @users.create :john do
+      first_name 'john'
+    end
+
+    assert_equal 1, User.count
+
+    john_id = FactoryFixtures::Fixture.new.F(:john)
+
+    john = User.find(john_id)
+    assert john
+
+    assert_equal john.first_name, 'john'
+  end
+
   trans :test_create_with_factory_values do
     @users.create :james, :regular_user do
       first_name 'james'
@@ -85,7 +101,7 @@ class TestFixturesFile < FactoryFixtures::UnitTestCase
     assert_equal 'james.jameson@example.org', james.email
   end
 
-  trans :test_manage_associatons do
+  trans :test_belongs_to_associatons do
     @accounts.create :acc_a, :simple_account do
       company "AAA & Co"
     end
@@ -100,6 +116,29 @@ class TestFixturesFile < FactoryFixtures::UnitTestCase
     james = User.find(FactoryFixtures::Fixture.new.F(:james))
 
     assert_equal acc_a, james.account
+  end
+
+  trans :test_habtm_to_associatons do
+    @cities.create :tokyo do
+      name 'Tokyo'
+    end
+
+    @cities.create :kyoto do
+      name 'Kyoto'
+    end
+
+    @users.create :akira do
+      first_name 'Akira'
+      cities F(:tokyo), F(:kyoto)
+    end
+
+    tokyo = City.where(:name => 'Tokyo').first
+    kyoto = City.where(:name => 'Kyoto').first
+
+    akira = User.where(:first_name => 'Akira').first
+
+    assert akira.cities.include?(tokyo)
+    assert akira.cities.include?(kyoto)
   end
 
 end

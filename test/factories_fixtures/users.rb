@@ -17,3 +17,8 @@ create :john do
   last_name 'jameson'
   account F(:test_poc)
 end
+
+create :akira do
+  first_name 'Akira'
+  cities F(:tokyo), F(:kyoto)
+end

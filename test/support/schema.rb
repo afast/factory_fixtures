@@ -15,5 +15,15 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string :address
     t.string :zip
   end
+
+  create_table :cities_users, :id => false, :force => true do |t|
+    t.integer :city_id
+    t.integer :user_id
+  end
+
+  create_table :cities, :force => true do |t|
+    t.string :name
+  end
+
 end 
 
