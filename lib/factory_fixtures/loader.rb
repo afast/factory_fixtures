@@ -24,7 +24,7 @@ module FactoryFixtures
         fixtures_file.instance_eval File.read(file)
         fixtures_file.fixtures
       else
-        puts "--- FIle not exists: #{file}"
+        puts "--- File not exists: #{file}"
         false
       end
     end
