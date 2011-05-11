@@ -1,12 +1,10 @@
 require 'active_support'
 require 'factory_girl'
-require 'declarative_authorization/maintenance'
 
 module FactoryFixtures
   module Unit
 
     class TestCase < ActiveSupport::TestCase
-      include Authorization::TestHelper
 
       ATTR_BASE_DIR_SEARCH = 'base_dir_search'
       ATTR_FIXTURES_TO_LOAD = 'factory_fixtures_to_load'
@@ -44,9 +42,7 @@ module FactoryFixtures
         return if factory_fixtures_to_load.nil?
         
         fixtures_loaded = factory_fixtures_to_load.select do |file|
-          fixtures = without_access_control do
-            FactoryFixtures::Loader.load_from_file file.to_s
-          end
+          fixtures = FactoryFixtures::Loader.load_from_file file.to_s
           self.class.send :define_method, File.basename(file, '.rb') do
             fixtures
           end
