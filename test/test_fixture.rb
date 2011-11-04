@@ -44,7 +44,7 @@ class TestFixtureIdentifiers < Test::Unit::TestCase
     symbols = randomly_unique_symbols 10
     
     identifiers = symbols.collect { |s| FactoryFixtures::Fixture.new.F(s) }
-    identifiers.uniq!
+    identifiers.uniq
 
     assert_equal symbols.length, identifiers.length
   end
@@ -65,7 +65,7 @@ class TestFixtureIdentifiers < Test::Unit::TestCase
 
     while symbols.length < n do
       symbols << randomly_symbol 
-      symbols.uniq!
+      symbols.uniq
     end
 
     symbols
